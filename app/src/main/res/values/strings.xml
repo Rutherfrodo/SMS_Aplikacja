@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SMS</string>
+    <string name="Start">Wysylaj</string>
+    <string name="Stop">Stop</string>
+</resources>

@@ -40,7 +40,8 @@ public class MyService extends Service  {
                     showToast("SMS");
                     //mTextView.setText(Godzina+ ":"+Minuta+" czasu Greckiego");
                 }else{
-
+		    sms(Godzina + ":" + Minuta +" czasu Greckiego");
+                    showToast("SMS");
                 }
             }else{
                 showToast("Sprawdzam godzine");

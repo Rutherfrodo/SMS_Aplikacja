@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mTextView;
     Button mButtonStart;
     Button mButtonStop;
+    TextView mCzasView;
    // GregorianCalendar calendar = new GregorianCalendar();
    // int Godzina = calendar.get(Calendar.HOUR_OF_DAY);
    // int Minuta = calendar.get(Calendar.MINUTE);
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.text);
         mButtonStart = (Button) findViewById(R.id.button);
         mButtonStop = (Button) findViewById(R.id.button2);
+        mCzasView = (TextView) findViewById(R.id.textView);
+       // final MyService text = new MyService();
 
         if (checkSelfPermission(Manifest.permission.SEND_SMS)
                 == PackageManager.PERMISSION_DENIED) {
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startMyService();
-
+               // mCzasView.setText(text.PanelGodziny());
             }
         });
 
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 stopMyService();
+
             }
         });
 
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private void startMyService() {
         Intent serviceIntent = new Intent(this, MyService.class);
         startService(serviceIntent);
+
     }
 
     private void stopMyService() {

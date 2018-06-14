@@ -1,4 +1,4 @@
-package com.example.frodo.sms;
+﻿package com.example.frodo.sms;
 
 import android.app.Service;
 import android.content.Intent;
@@ -18,25 +18,42 @@ public class MyService extends Service  {
     private Toast toast;
     private Timer timer;
     private TimerTask timerTask;
+    public int Godzina;
+    public int Minuta;
+    public String czas;
     private class MyTimerTask extends TimerTask {
         @Override
         public void run() {
             GregorianCalendar calendar = new GregorianCalendar();
-            int Godzina = calendar.get(Calendar.HOUR_OF_DAY);
-            int Minuta = calendar.get(Calendar.MINUTE);
+            Godzina = calendar.get(Calendar.HOUR_OF_DAY);
+            Minuta = calendar.get(Calendar.MINUTE);
+            Godzina = Godzina + 1;
 
             if (Godzina == Minuta ) {
                 if(Godzina < 10 ) {
-                    sms("0"+Godzina + ":" +"0" +Minuta);
+                    sms("0"+Godzina + ":" +"0" +Minuta+" czasu Greckiego");
                     showToast("SMS");
+                   //mTextView.setText(Godzina+ ":"+Minuta+" czasu Greckiego");
+                }else if(Godzina==24){
+                    Godzina=0;
+                    sms(Godzina + ":" + Minuta +" czasu Greckiego");
+                    showToast("SMS");
+                    //mTextView.setText(Godzina+ ":"+Minuta+" czasu Greckiego");
                 }else{
-                    sms(Godzina + ":" + Minuta);
-                    showToast("SMS");
+
                 }
             }else{
                 showToast("Sprawdzam godzine");
             }
+
+
         }
+    }
+    public String PanelGodziny(){
+        final int minuta = this.Minuta;
+        final int godzina = this.Godzina;
+        String timy =godzina + ":"+ minuta;
+        return timy;
     }
     private void showToast(String text) {
         toast.setText(text);
@@ -49,7 +66,7 @@ public class MyService extends Service  {
 
     void sms(String godzina) {
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage("666952185",null,godzina,null,null);
+        sms.sendTextMessage("xxxxxxxxx",null,godzina,null,null); // xxxxxxxxx nr telefonu
         Log.d("Wiadomosc", "zostala wyslana");
     }
 
@@ -60,6 +77,7 @@ public class MyService extends Service  {
         timer = new Timer();
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
+
     }
 
     @Override
@@ -67,8 +85,8 @@ public class MyService extends Service  {
         writeToLogs("Called onStartCommand() methond");
         clearTimerSchedule();
         initTask();
-        timer.scheduleAtFixedRate(timerTask, 4*1000, 40000);
-        showToast("Your service has been started");
+        timer.scheduleAtFixedRate(timerTask, 4*1000, 60000);
+        showToast("Zaczynam wysyłać SMSki");
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -88,7 +106,7 @@ public class MyService extends Service  {
     public void onDestroy() {
         writeToLogs("Called onDestroy() method");
         clearTimerSchedule();
-        showToast("Your service has been stopped");
+        showToast("SMSki wyłączone");
         super.onDestroy();
     }
 
